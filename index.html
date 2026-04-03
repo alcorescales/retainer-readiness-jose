@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retainer Readiness Score — Jose Alvarado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #F5F8FF;
+    --white:   #FFFFFF;
+    --blue:    #1E5FD4;
+    --blue-md: #3B7BF0;
+    --blue-lt: #E8EFFE;
+    --blue-xl: #EDF2FF;
+    --dark:    #0F1F3D;
+    --body:    #374060;
+    --muted:   #7A87A8;
+    --border:  #C8D7F5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px 60px;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    width: 100%;
+    background: var(--blue);
+    text-align: center;
+    padding: 10px 24px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: #fff;
+    margin-bottom: 40px;
+  }
+
+  /* ── WRAPPER ── */
+  .wrap {
+    width: 100%;
+    max-width: 640px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--blue-lt);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 18px;
+  }
+  .pill::before {
+    content: '';
+    width: 5px; height: 5px;
+    background: var(--blue-md);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:0.4; transform:scale(0.7); }
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+  .header h1 em { font-style: italic; color: var(--blue); }
+
+  .header p {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-wrap {
+    margin-bottom: 28px;
+    animation: fadeUp 0.5s 0.1s ease both;
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .progress-meta span:last-child { color: var(--blue); }
+  .progress-bar {
+    height: 5px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--blue);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+  }
+
+  /* ── QUESTION CARD ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 36px 32px;
+    box-shadow: 0 4px 24px rgba(30,95,212,0.08);
+    animation: fadeUp 0.4s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-md));
+  }
+
+  .q-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+  .q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 3vw, 22px);
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.3;
+    margin-bottom: 24px;
+  }
+
+  /* ── OPTIONS ── */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    text-align: left;
+  }
+  .option:hover {
+    border-color: var(--blue-md);
+    background: var(--blue-xl);
+    transform: translateX(3px);
+  }
+  .option.selected {
+    border-color: var(--blue);
+    background: var(--blue-lt);
+  }
+  .option-letter {
+    width: 28px; height: 28px;
+    background: var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    flex-shrink: 0;
+    transition: background 0.2s, color 0.2s;
+  }
+  .option.selected .option-letter {
+    background: var(--blue);
+    color: #fff;
+  }
+  .option-text {
+    font-size: 14px;
+    color: var(--body);
+    line-height: 1.5;
+    padding-top: 4px;
+  }
+  .option.selected .option-text { color: var(--dark); font-weight: 500; }
+
+  /* ── NEXT BTN ── */
+  .btn-wrap { margin-top: 24px; }
+  .btn-next {
+    width: 100%;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .btn-next.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .btn-next.active:hover {
+    background: var(--blue-md);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(30,95,212,0.25);
+  }
+
+  /* ── RESULT ── */
+  .result { display: none; animation: fadeUp 0.5s ease both; }
+  .result.show { display: block; }
+
+  .score-ring-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 8px 0 24px;
+  }
+  .score-ring {
+    position: relative;
+    width: 140px; height: 140px;
+  }
+  .score-ring svg { transform: rotate(-90deg); }
+  .score-ring circle {
+    fill: none;
+    stroke-width: 10;
+    stroke-linecap: round;
+  }
+  .ring-bg   { stroke: var(--border); }
+  .ring-fill { stroke: var(--blue); transition: stroke-dashoffset 1.2s ease; }
+  .score-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--dark);
+    line-height: 1;
+  }
+  .score-out {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 4vw, 28px);
+    font-weight: 700;
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .result-title em { font-style: italic; color: var(--blue); }
+
+  .result-desc {
+    font-size: 15px;
+    color: var(--body);
+    line-height: 1.7;
+    text-align: center;
+    margin-bottom: 28px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Breakdown */
+  .breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .breakdown-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .bd-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .bd-icon.good { background: #E6F4EC; }
+  .bd-icon.warn { background: #FEF3E2; }
+  .bd-icon.bad  { background: #FEE8E8; }
+  .bd-label { font-size: 13px; font-weight: 600; color: var(--dark); }
+  .bd-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* CTA card */
+  .cta-card {
+    background: var(--blue);
+    border-radius: 16px;
+    padding: 32px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 140px; height: 140px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .cta-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .cta-card p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .cta-form { display: flex; flex-direction: column; gap: 10px; }
+  .cta-form input {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 9px;
+    padding: 13px 15px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .cta-form input::placeholder { color: rgba(255,255,255,0.5); }
+  .cta-form input:focus {
+    border-color: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.2);
+  }
+  .cta-btn {
+    background: #fff;
+    color: var(--blue);
+    border: none;
+    border-radius: 9px;
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .cta-btn:hover { background: #EDF2FF; transform: translateY(-1px); }
+  .cta-note { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 8px; }
+
+  .retake {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .retake:hover { color: var(--blue); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .slide-out {
+    animation: slideOut 0.25s ease forwards;
+  }
+  @keyframes slideOut {
+    to { opacity: 0; transform: translateX(-20px); }
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 28px 20px; }
+    .cta-card { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">FREE QUIZ — FIND OUT WHERE YOUR INCOME IS LEAKING</div>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="pill">2-minute quiz</div>
+    <h1>What's Your<br><em>Retainer Readiness Score?</em></h1>
+    <p>Answer 6 quick questions. Get a personalised score that shows exactly where you're leaving money on the table — and what to fix first.</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-meta">
+      <span id="progressLabel">Question 1 of 6</span>
+      <span id="progressPct">0% complete</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- QUIZ CARD -->
+  <div class="card" id="quizCard">
+    <div class="q-num" id="qNum">Question 01</div>
+    <div class="q-text" id="qText"></div>
+    <div class="options" id="options"></div>
+    <div class="btn-wrap">
+      <button class="btn-next" id="btnNext">Continue →</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result card" id="resultCard">
+    <div class="score-ring-wrap">
+      <div class="score-ring">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <circle class="ring-bg" cx="70" cy="70" r="60"/>
+          <circle class="ring-fill" id="ringFill" cx="70" cy="70" r="60"
+            stroke-dasharray="377"
+            stroke-dashoffset="377"/>
+        </svg>
+        <div class="score-label">
+          <span class="score-num" id="scoreNum">0</span>
+          <span class="score-out">/ 100</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-title" id="resultTitle"></div>
+    <div class="result-desc" id="resultDesc"></div>
+
+    <div class="breakdown" id="breakdown"></div>
+
+    <div class="cta-card">
+      <h3 id="ctaTitle">Ready to fix this?</h3>
+      <p id="ctaDesc">Join my free live masterclass and I'll show you the exact system — step by step.</p>
+      <div class="cta-form">
+        <input type="text"  placeholder="First name" id="ctaName" />
+        <input type="email" placeholder="Email address" id="ctaEmail" />
+        <button class="cta-btn" onclick="handleCTA()">Save My Spot — Free →</button>
+      </div>
+      <p class="cta-note">No spam. Unsubscribe anytime. Free masterclass — August 2025.</p>
+    </div>
+
+    <button class="retake" onclick="retake()">← Retake the quiz</button>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  {
+    text: "How consistent is your income right now?",
+    options: [
+      { text: "All over the place — some months great, some months nothing",       score: 0 },
+      { text: "Somewhat consistent but I can't predict it month to month",          score: 5 },
+      { text: "Fairly stable — I usually know roughly what's coming in",            score: 12 },
+      { text: "Very consistent — I have retainer clients I can count on",           score: 18 },
+    ]
+  },
+  {
+    text: "How do most of your clients currently pay you?",
+    options: [
+      { text: "One-off projects — they pay per video or per shoot",                 score: 0 },
+      { text: "Mostly one-off but I have one or two repeat clients",                score: 5 },
+      { text: "A mix — some retainers, some one-off work",                          score: 12 },
+      { text: "Mainly monthly retainers — clients pay me the same amount each month", score: 18 },
+    ]
+  },
+  {
+    text: "When a potential client asks your price, what usually happens?",
+    options: [
+      { text: "I panic and underprice to avoid losing them",                        score: 0 },
+      { text: "I give them a number but then feel like I charged too little",       score: 5 },
+      { text: "I'm fairly confident but occasionally drop my price when pushed",    score: 10 },
+      { text: "I state my price with confidence and hold it",                       score: 16 },
+    ]
+  },
+  {
+    text: "How do you currently find new clients?",
+    options: [
+      { text: "Mostly word of mouth — I wait and hope someone refers me",           score: 0 },
+      { text: "I post content sometimes but nothing consistent or predictable",     score: 5 },
+      { text: "I have a system — outreach, content, or both — but it's not dialled in", score: 10 },
+      { text: "I have a repeatable system that generates leads consistently",       score: 16 },
+    ]
+  },
+  {
+    text: "How much of your work do you have documented in a process or system?",
+    options: [
+      { text: "Nothing — it's all in my head and I figure it out each time",        score: 0 },
+      { text: "A few things written down but nothing I could hand to someone else", score: 4 },
+      { text: "Most of my process is documented but not fully streamlined",         score: 10 },
+      { text: "I have clear SOPs and could onboard a client without reinventing it each time", score: 16 },
+    ]
+  },
+  {
+    text: "If you signed a new $5,000/month retainer client tomorrow, could you deliver?",
+    options: [
+      { text: "Honestly no — I don't know what I'd even include for that price",    score: 0 },
+      { text: "Probably, but I'd be figuring it out as I go",                       score: 5 },
+      { text: "Yes, but I'd be stretched and stressed doing it solo",               score: 10 },
+      { text: "Yes — I have a clear offer, clear deliverables, and capacity to deliver it", score: 16 },
+    ]
+  },
+];
+
+const results = [
+  {
+    min: 0, max: 25,
+    title: "You're at the starting line — <em>and that's okay.</em>",
+    desc: "Your income is unpredictable, your pricing is reactive, and you don't yet have a system to attract or retain high-ticket clients consistently. The good news? You're exactly who this masterclass was built for. Every single gap here is fixable with the right framework.",
+    cta: "Here's your next move:",
+    ctaDesc: "Come to the free live masterclass. I'll walk you through the exact 3-step system that takes someone from where you are now to $5k–$10k retainer clients — starting in the next 30 days.",
+    breakdown: [
+      { icon: '⚠️', type: 'bad',  label: 'Income consistency',   sub: 'No predictable monthly base yet' },
+      { icon: '⚠️', type: 'bad',  label: 'Retainer structure',   sub: 'Still relying on one-off work' },
+      { icon: '⚠️', type: 'bad',  label: 'Pricing confidence',   sub: 'Undercharging is costing you money' },
+      { icon: '⚠️', type: 'warn', label: 'Lead generation',      sub: 'No consistent system in place' },
+    ]
+  },
+  {
+    min: 26, max: 55,
+    title: "You've got momentum — <em>but you're leaving money behind.</em>",
+    desc: "You're making money and you have some of the fundamentals in place. But your income is still inconsistent, you're probably not charging what you're worth, and you're missing a system that would make this predictable. You're closer than you think — a few key moves would change everything.",
+    cta: "What to fix first:",
+    ctaDesc: "Your biggest leak is pricing and retainer structure. In the free masterclass, I'll show you exactly how to repackage what you're already doing into a $3k–$6.5k/month offer clients will say yes to.",
+    breakdown: [
+      { icon: '✓',  type: 'good', label: 'You have clients',        sub: 'Foundation is there' },
+      { icon: '⚠️', type: 'warn', label: 'Income still unpredictable', sub: 'Month-to-month uncertainty' },
+      { icon: '⚠️', type: 'warn', label: 'Pricing not maximised',   sub: 'Room to charge significantly more' },
+      { icon: '⚠️', type: 'bad',  label: 'No retainer system',      sub: 'Still starting from zero each month' },
+    ]
+  },
+  {
+    min: 56, max: 79,
+    title: "You're close — <em>one system away from the next level.</em>",
+    desc: "You're running a real business. You have clients, a process, and some predictability. But you haven't yet cracked the ceiling — you're not fully retainer-based, you're probably still doing too much yourself, and there's a gap between where you are and where you want to be. The system is right there.",
+    cta: "Your next unlock:",
+    ctaDesc: "You're at the stage where the right positioning and offer structure will double your monthly revenue without adding more hours. That's exactly what the masterclass covers.",
+    breakdown: [
+      { icon: '✓',  type: 'good', label: 'Consistent clients',     sub: 'Strong foundation' },
+      { icon: '✓',  type: 'good', label: 'Processes in place',     sub: 'Can deliver at scale' },
+      { icon: '⚠️', type: 'warn', label: 'Not fully retainer-based', sub: 'Still some income risk' },
+      { icon: '⚠️', type: 'warn', label: 'Growth ceiling',         sub: 'Needs a scalable client system' },
+    ]
+  },
+  {
+    min: 80, max: 100,
+    title: "You're already operating at a high level — <em>let's scale it.</em>",
+    desc: "You have the foundations most videographers never build — retainer clients, a process, pricing confidence, and a system to find leads. Now it's about scaling what's already working. The masterclass will show you how to use ads and webinars to bring in high-quality retainer clients on autopilot.",
+    cta: "What's next for you:",
+    ctaDesc: "You're ready to layer in a growth system. Come to the free masterclass and I'll show you how to turn what you've built into a $20k–$50k/month agency — the way I did it.",
+    breakdown: [
+      { icon: '✓', type: 'good', label: 'Retainer clients',       sub: 'Predictable monthly income' },
+      { icon: '✓', type: 'good', label: 'Strong pricing',         sub: 'Charging what you are worth' },
+      { icon: '✓', type: 'good', label: 'Lead generation system', sub: 'Consistent pipeline' },
+      { icon: '✓', type: 'good', label: 'Systems in place',       sub: 'Ready to scale' },
+    ]
+  },
+];
+
+let current = 0;
+let totalScore = 0;
+let selected = null;
+
+function render() {
+  const q = questions[current];
+  const letters = ['A','B','C','D'];
+
+  document.getElementById('qNum').textContent = 'Question ' + String(current + 1).padStart(2,'0');
+  document.getElementById('qText').textContent = q.text;
+
+  const opts = document.getElementById('options');
+  opts.innerHTML = '';
+  q.options.forEach(function(o, i) {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.innerHTML = '<div class="option-letter">' + letters[i] + '</div><div class="option-text">' + o.text + '</div>';
+    div.addEventListener('click', function() {
+      document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+      div.classList.add('selected');
+      selected = o.score;
+      document.getElementById('btnNext').classList.add('active');
+    });
+    opts.appendChild(div);
+  });
+
+  const pct = Math.round((current / questions.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = 'Question ' + (current + 1) + ' of ' + questions.length;
+  document.getElementById('progressPct').textContent = pct + '% complete';
+
+  selected = null;
+  document.getElementById('btnNext').classList.remove('active');
+}
+
+document.getElementById('btnNext').addEventListener('click', function() {
+  if (selected === null) return;
+  totalScore += selected;
+  current++;
+  if (current < questions.length) {
+    const card = document.getElementById('quizCard');
+    card.classList.add('slide-out');
+    setTimeout(function() {
+      card.classList.remove('slide-out');
+      render();
+    }, 250);
+  } else {
+    showResult();
+  }
+});
+
+function showResult() {
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressLabel').textContent = 'Complete';
+  document.getElementById('progressPct').textContent = '100% complete';
+
+  document.getElementById('quizCard').style.display = 'none';
+
+  const score = Math.min(totalScore, 100);
+  const result = results.find(r => score >= r.min && score <= r.max) || results[0];
+
+  document.getElementById('scoreNum').textContent = score;
+  document.getElementById('resultTitle').innerHTML = result.title;
+  document.getElementById('resultDesc').textContent = result.desc;
+  document.getElementById('ctaTitle').textContent = result.cta;
+  document.getElementById('ctaDesc').textContent = result.ctaDesc;
+
+  const bd = document.getElementById('breakdown');
+  bd.innerHTML = '';
+  result.breakdown.forEach(function(item) {
+    bd.innerHTML += '<div class="breakdown-item"><div class="bd-icon ' + item.type + '">' + item.icon + '</div><div><div class="bd-label">' + item.label + '</div><div class="bd-sub">' + item.sub + '</div></div></div>';
+  });
+
+  const rc = document.getElementById('resultCard');
+  rc.classList.add('show');
+
+  // Animate ring
+  const circumference = 377;
+  const offset = circumference - (score / 100) * circumference;
+  setTimeout(function() {
+    document.getElementById('ringFill').style.strokeDashoffset = offset;
+    // Count up number
+    let n = 0;
+    const step = score / 60;
+    const interval = setInterval(function() {
+      n = Math.min(n + step, score);
+      document.getElementById('scoreNum').textContent = Math.round(n);
+      if (n >= score) clearInterval(interval);
+    }, 16);
+  }, 200);
+}
+
+function handleCTA() {
+  const name = document.getElementById('ctaName').value.trim();
+  const email = document.getElementById('ctaEmail').value.trim();
+  if (!name || !email) { alert('Please enter your name and email to save your spot.'); return; }
+  // Replace with actual registration URL
+  alert('You\'re in, ' + name + '! Check your email for the webinar link.');
+}
+
+function retake() {
+  current = 0;
+  totalScore = 0;
+  selected = null;
+  document.getElementById('resultCard').classList.remove('show');
+  document.getElementById('quizCard').style.display = 'block';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
