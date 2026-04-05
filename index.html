@@ -3,458 +3,285 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Retainer Readiness Score — Jose Alvarado</title>
+<title>Retainer Readiness Score — Jose</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Urbanist:wght@800;900&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg:      #F5F8FF;
-    --white:   #FFFFFF;
-    --blue:    #1E5FD4;
-    --blue-md: #3B7BF0;
-    --blue-lt: #E8EFFE;
-    --blue-xl: #EDF2FF;
-    --dark:    #0F1F3D;
-    --body:    #374060;
-    --muted:   #7A87A8;
-    --border:  #C8D7F5;
+    --bg:         #0b0d14;
+    --dark:       #0e1018;
+    --card:       #131620;
+    --card2:      #181c28;
+    --border:     #1f2333;
+    --purple:     #6C63FF;
+    --purple2:    #8B85FF;
+    --purple-dim: rgba(108,99,255,0.12);
+    --purple-glow:rgba(108,99,255,0.30);
+    --white:      #F0F0FF;
+    --grey:       #6B7280;
+    --mid:        #9CA3AF;
+    --gold:       #F5C542;
+    --green:      #48C78E;
+    --red:        #FF4444;
   }
-
-  html { scroll-behavior: smooth; }
-
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
   body {
-    background: var(--bg);
-    font-family: 'DM Sans', sans-serif;
-    color: var(--body);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 16px 60px;
+    background:var(--bg); color:var(--white);
+    font-family:'Figtree',sans-serif; line-height:1.6;
+    overflow-x:hidden; min-height:100vh;
+    display:flex; flex-direction:column; align-items:center;
+    padding:0 16px 80px;
   }
 
-  /* ── TOP BAR ── */
   .topbar {
-    width: 100%;
-    background: var(--blue);
-    text-align: center;
-    padding: 10px 24px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    color: #fff;
-    margin-bottom: 40px;
+    width:100%; background:var(--purple);
+    text-align:center; padding:11px 24px;
+    font-size:0.72rem; font-weight:700; letter-spacing:0.14em;
+    color:#fff; text-transform:uppercase; margin-bottom:52px;
   }
 
-  /* ── WRAPPER ── */
-  .wrap {
-    width: 100%;
-    max-width: 640px;
-  }
+  .wrap { width:100%; max-width:660px; }
 
-  /* ── HEADER ── */
-  .header {
-    text-align: center;
-    margin-bottom: 36px;
-    animation: fadeUp 0.5s ease both;
+  .header { text-align:center; margin-bottom:36px; animation:fadeDown 0.5s ease both; }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid rgba(108,99,255,0.45); color:var(--purple2);
+    font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase;
+    padding:7px 20px; border-radius:100px; margin-bottom:22px;
   }
-
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--blue-lt);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 5px 14px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--blue);
-    margin-bottom: 18px;
-  }
-  .pill::before {
-    content: '';
-    width: 5px; height: 5px;
-    background: var(--blue-md);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%,100% { opacity:1; transform:scale(1); }
-    50%      { opacity:0.4; transform:scale(0.7); }
-  }
-
+  .badge-dot { width:6px; height:6px; border-radius:50%; background:var(--purple2); animation:pulse 2s infinite; }
   .header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(26px, 5vw, 38px);
-    font-weight: 900;
-    line-height: 1.15;
-    color: var(--dark);
-    margin-bottom: 10px;
+    font-family:'Urbanist',sans-serif;
+    font-size:clamp(2rem,5vw,3.4rem); font-weight:900; line-height:1.05;
+    letter-spacing:-0.03em; margin-bottom:14px;
   }
-  .header h1 em { font-style: italic; color: var(--blue); }
+  .header h1 .hi {
+    color:var(--purple2);
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-style:italic; font-size:1.1em; font-weight:700;
+  }
+  .header p { font-size:1rem; color:var(--mid); max-width:500px; margin:0 auto; line-height:1.75; }
 
-  .header p {
-    font-size: 15px;
-    color: var(--muted);
-    max-width: 480px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-
-  /* ── PROGRESS ── */
-  .progress-wrap {
-    margin-bottom: 28px;
-    animation: fadeUp 0.5s 0.1s ease both;
-  }
+  .progress-wrap { margin-bottom:24px; animation:fadeDown 0.5s 0.1s ease both; }
   .progress-meta {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--muted);
-    margin-bottom: 8px;
+    display:flex; justify-content:space-between;
+    font-size:0.75rem; font-weight:700; color:var(--grey);
+    text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px;
   }
-  .progress-meta span:last-child { color: var(--blue); }
-  .progress-bar {
-    height: 5px;
-    background: var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: var(--blue);
-    border-radius: 10px;
-    transition: width 0.4s ease;
-  }
+  .progress-meta span:last-child { color:var(--purple2); }
+  .progress-bar { height:3px; background:var(--border); border-radius:10px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--purple); border-radius:10px; transition:width 0.4s ease; }
 
-  /* ── QUESTION CARD ── */
   .card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 36px 32px;
-    box-shadow: 0 4px 24px rgba(30,95,212,0.08);
-    animation: fadeUp 0.4s ease both;
-    position: relative;
-    overflow: hidden;
+    background:var(--card); border:1px solid var(--border); border-radius:10px;
+    padding:36px 32px; position:relative; overflow:hidden;
+    animation:fadeDown 0.4s ease both;
   }
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--blue), var(--blue-md));
-  }
+  .card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--purple); }
 
-  .q-num {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--blue);
-    margin-bottom: 10px;
-  }
+  .q-num { font-size:0.7rem; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--purple2); margin-bottom:10px; }
   .q-text {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(18px, 3vw, 22px);
-    font-weight: 700;
-    color: var(--dark);
-    line-height: 1.3;
-    margin-bottom: 24px;
+    font-family:'Urbanist',sans-serif;
+    font-size:clamp(1.1rem,2.5vw,1.4rem); font-weight:900;
+    color:var(--white); line-height:1.25; margin-bottom:28px; letter-spacing:-0.01em;
   }
 
-  /* ── OPTIONS ── */
-  .options { display: flex; flex-direction: column; gap: 10px; }
-
+  .options { display:flex; flex-direction:column; gap:10px; }
   .option {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 14px 18px;
-    background: var(--bg);
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s, transform 0.15s;
-    text-align: left;
+    display:flex; align-items:flex-start; gap:14px;
+    padding:14px 18px; background:var(--bg);
+    border:1px solid var(--border); border-radius:8px;
+    cursor:pointer; transition:border-color 0.2s, background 0.2s, transform 0.15s; text-align:left;
   }
-  .option:hover {
-    border-color: var(--blue-md);
-    background: var(--blue-xl);
-    transform: translateX(3px);
-  }
-  .option.selected {
-    border-color: var(--blue);
-    background: var(--blue-lt);
-  }
+  .option:hover { border-color:var(--purple2); background:var(--card2); transform:translateX(3px); }
+  .option.selected { border-color:var(--purple); background:var(--purple-dim); }
   .option-letter {
-    width: 28px; height: 28px;
-    background: var(--border);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--muted);
-    flex-shrink: 0;
-    transition: background 0.2s, color 0.2s;
+    width:28px; height:28px; border-radius:50%;
+    background:var(--border); display:flex; align-items:center; justify-content:center;
+    font-size:0.72rem; font-weight:800; color:var(--grey); flex-shrink:0;
+    transition:background 0.2s, color 0.2s;
   }
-  .option.selected .option-letter {
-    background: var(--blue);
-    color: #fff;
-  }
-  .option-text {
-    font-size: 14px;
-    color: var(--body);
-    line-height: 1.5;
-    padding-top: 4px;
-  }
-  .option.selected .option-text { color: var(--dark); font-weight: 500; }
+  .option.selected .option-letter { background:var(--purple); color:#fff; }
+  .option-text { font-size:0.93rem; color:var(--mid); line-height:1.55; padding-top:4px; }
+  .option.selected .option-text { color:var(--white); font-weight:600; }
 
-  /* ── NEXT BTN ── */
-  .btn-wrap { margin-top: 24px; }
+  .btn-wrap { margin-top:24px; }
   .btn-next {
-    width: 100%;
-    background: var(--blue);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 15px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-    opacity: 0.4;
-    pointer-events: none;
+    width:100%; background:var(--purple); color:#fff; border:none; border-radius:6px;
+    padding:17px; font-family:'Figtree',sans-serif; font-size:0.95rem; font-weight:800;
+    letter-spacing:0.09em; text-transform:uppercase;
+    cursor:pointer; transition:background 0.2s, transform 0.15s, box-shadow 0.2s;
+    opacity:0.35; pointer-events:none;
   }
-  .btn-next.active {
-    opacity: 1;
-    pointer-events: all;
-  }
-  .btn-next.active:hover {
-    background: var(--blue-md);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(30,95,212,0.25);
-  }
+  .btn-next.active { opacity:1; pointer-events:all; }
+  .btn-next.active:hover { background:var(--purple2); transform:translateY(-2px); box-shadow:0 12px 40px var(--purple-glow); }
 
-  /* ── RESULT ── */
-  .result { display: none; animation: fadeUp 0.5s ease both; }
-  .result.show { display: block; }
+  .result { display:none; animation:fadeDown 0.5s ease both; }
+  .result.show { display:block; }
 
-  .score-ring-wrap {
-    display: flex;
-    justify-content: center;
-    margin: 8px 0 24px;
-  }
-  .score-ring {
-    position: relative;
-    width: 140px; height: 140px;
-  }
-  .score-ring svg { transform: rotate(-90deg); }
-  .score-ring circle {
-    fill: none;
-    stroke-width: 10;
-    stroke-linecap: round;
-  }
-  .ring-bg   { stroke: var(--border); }
-  .ring-fill { stroke: var(--blue); transition: stroke-dashoffset 1.2s ease; }
+  .score-ring-wrap { display:flex; flex-direction:column; align-items:center; margin:8px 0 28px; gap:14px; }
+  .score-ring { position:relative; width:148px; height:148px; }
+  .score-ring svg { transform:rotate(-90deg); }
+  .score-ring circle { fill:none; stroke-width:8; stroke-linecap:round; }
+  .ring-bg   { stroke:var(--border); }
+  .ring-fill { stroke:var(--purple); transition:stroke-dashoffset 1.2s ease; }
   .score-label {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
   }
-  .score-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 38px;
-    font-weight: 900;
-    color: var(--dark);
-    line-height: 1;
-  }
-  .score-out {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 500;
+  .score-num { font-family:'Urbanist',sans-serif; font-size:2.6rem; font-weight:900; color:var(--white); line-height:1; }
+  .score-out { font-size:0.72rem; color:var(--grey); font-weight:600; margin-top:2px; letter-spacing:0.08em; }
+  .score-tier {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:6px 18px; border-radius:100px; border:1px solid;
+    font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
   }
 
   .result-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(20px, 4vw, 28px);
-    font-weight: 700;
-    color: var(--dark);
-    text-align: center;
-    margin-bottom: 8px;
+    font-family:'Urbanist',sans-serif;
+    font-size:clamp(1.4rem,3.5vw,2rem); font-weight:900;
+    color:var(--white); text-align:center; margin-bottom:10px;
+    letter-spacing:-0.02em; text-transform:uppercase; line-height:1.1;
   }
-  .result-title em { font-style: italic; color: var(--blue); }
+  .result-title em { font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; color:var(--purple2); font-size:1.08em; text-transform:none; }
+  .result-desc { font-size:0.98rem; color:var(--mid); line-height:1.8; text-align:center; margin-bottom:32px; max-width:540px; margin-left:auto; margin-right:auto; }
 
-  .result-desc {
-    font-size: 15px;
-    color: var(--body);
-    line-height: 1.7;
-    text-align: center;
-    margin-bottom: 28px;
-    max-width: 520px;
-    margin-left: auto;
-    margin-right: auto;
+  .section-label { font-size:0.7rem; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--purple2); margin-bottom:12px; }
+
+  /* ACTION PLAN */
+  .action-plan { margin-bottom:32px; }
+  .action-plan-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:8px; }
+  .priority-badge {
+    display:inline-flex; align-items:center; gap:6px;
+    background:rgba(245,197,66,0.12); border:1px solid rgba(245,197,66,0.3);
+    color:var(--gold); font-size:0.7rem; font-weight:700; letter-spacing:0.1em;
+    text-transform:uppercase; padding:5px 12px; border-radius:100px;
+  }
+  .action-steps { display:flex; flex-direction:column; gap:10px; }
+  .action-step {
+    display:flex; gap:16px; align-items:flex-start;
+    background:var(--card2); border:1px solid var(--border); border-radius:8px;
+    padding:20px; transition:border-color 0.2s;
+  }
+  .action-step:hover { border-color:rgba(108,99,255,0.4); }
+  .action-step-num {
+    flex-shrink:0; width:32px; height:32px; border-radius:50%;
+    background:var(--purple-dim); border:1px solid rgba(108,99,255,0.3);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.8rem; font-weight:900; color:var(--purple2);
+  }
+  .action-step-body h4 { font-size:0.95rem; font-weight:800; color:var(--white); margin-bottom:5px; }
+  .action-step-body p  { font-size:0.87rem; color:var(--mid); line-height:1.65; }
+  .step-tag {
+    display:inline-block; margin-top:10px;
+    font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--green); background:rgba(72,199,142,0.10); border:1px solid rgba(72,199,142,0.22);
+    padding:3px 10px; border-radius:100px;
   }
 
-  /* Breakdown */
-  .breakdown {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 28px;
-  }
-  .breakdown-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px 16px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-  }
+  /* BREAKDOWN */
+  .breakdown { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
+  .breakdown-item { background:var(--bg); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  .bd-main { display:flex; align-items:center; gap:14px; padding:14px 18px; }
   .bd-icon {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px;
-    flex-shrink: 0;
+    width:34px; height:34px; border-radius:8px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:14px;
   }
-  .bd-icon.good { background: #E6F4EC; }
-  .bd-icon.warn { background: #FEF3E2; }
-  .bd-icon.bad  { background: #FEE8E8; }
-  .bd-label { font-size: 13px; font-weight: 600; color: var(--dark); }
-  .bd-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .bd-icon.good { background:rgba(72,199,142,0.12); border:1px solid rgba(72,199,142,0.25); }
+  .bd-icon.warn { background:rgba(245,197,66,0.12);  border:1px solid rgba(245,197,66,0.25); }
+  .bd-icon.bad  { background:rgba(255,68,68,0.10);   border:1px solid rgba(255,68,68,0.22); }
+  .bd-label { font-size:0.9rem; font-weight:700; color:var(--white); }
+  .bd-sub   { font-size:0.8rem; color:var(--grey); margin-top:2px; }
+  .bd-fix {
+    border-top:1px solid var(--border); padding:13px 18px 15px 66px;
+    font-size:0.84rem; color:var(--mid); line-height:1.65; background:var(--card);
+  }
+  .bd-fix strong { color:var(--white); }
 
-  /* CTA card */
+  /* CTA */
   .cta-card {
-    background: var(--blue);
-    border-radius: 16px;
-    padding: 32px 28px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+    border-radius:10px; padding:32px 28px; text-align:center;
+    position:relative; overflow:hidden;
   }
-  .cta-card::before {
-    content: '';
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 140px; height: 140px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 50%;
-  }
+  .cta-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--purple); }
   .cta-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 8px;
+    font-family:'Urbanist',sans-serif; font-size:1.3rem; font-weight:900;
+    color:var(--white); margin-bottom:8px; letter-spacing:-0.01em; text-transform:uppercase;
   }
-  .cta-card p {
-    font-size: 14px;
-    color: rgba(255,255,255,0.75);
-    line-height: 1.6;
-    margin-bottom: 20px;
-  }
-
-  .cta-form { display: flex; flex-direction: column; gap: 10px; }
+  .cta-card p { font-size:0.95rem; color:var(--mid); line-height:1.75; margin-bottom:22px; }
+  .cta-form { display:flex; flex-direction:column; gap:10px; }
   .cta-form input {
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 9px;
-    padding: 13px 15px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: #fff;
-    outline: none;
-    transition: border-color 0.2s, background 0.2s;
+    background:var(--bg); border:1px solid var(--border); border-radius:6px;
+    padding:14px 16px; font-family:'Figtree',sans-serif; font-size:0.93rem;
+    color:var(--white); outline:none; transition:border-color 0.2s;
   }
-  .cta-form input::placeholder { color: rgba(255,255,255,0.5); }
-  .cta-form input:focus {
-    border-color: rgba(255,255,255,0.7);
-    background: rgba(255,255,255,0.2);
+  .cta-form input::placeholder { color:var(--grey); }
+  .cta-form input:focus { border-color:var(--purple); }
+  .btn-purple {
+    background:var(--purple); color:#fff; border:none; border-radius:6px;
+    padding:17px; font-family:'Figtree',sans-serif;
+    font-size:0.95rem; font-weight:800; letter-spacing:0.09em; text-transform:uppercase;
+    cursor:pointer; transition:background 0.2s, transform 0.15s, box-shadow 0.2s; width:100%;
   }
-  .cta-btn {
-    background: #fff;
-    color: var(--blue);
-    border: none;
-    border-radius: 9px;
-    padding: 14px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
+  .btn-purple:hover { background:var(--purple2); transform:translateY(-2px); box-shadow:0 12px 40px var(--purple-glow); }
+  .btn-wa {
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    background:#25D366; color:#0a1f12; border:none; border-radius:6px;
+    padding:15px; font-family:'Figtree',sans-serif;
+    font-size:0.9rem; font-weight:800; letter-spacing:0.07em; text-transform:uppercase;
+    cursor:pointer; transition:opacity 0.2s, transform 0.15s; width:100%; text-decoration:none;
+    margin-top:10px;
   }
-  .cta-btn:hover { background: #EDF2FF; transform: translateY(-1px); }
-  .cta-note { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 8px; }
+  .btn-wa:hover { opacity:0.88; transform:translateY(-1px); }
+  .cta-divider { display:flex; align-items:center; gap:12px; margin:14px 0 4px; }
+  .cta-divider::before, .cta-divider::after { content:''; flex:1; height:1px; background:var(--border); }
+  .cta-divider span { font-size:0.72rem; color:var(--grey); text-transform:uppercase; letter-spacing:0.1em; }
+  .cta-note { font-size:0.72rem; color:var(--grey); margin-top:12px; }
 
   .retake {
-    display: block;
-    text-align: center;
-    margin-top: 16px;
-    font-size: 13px;
-    color: var(--muted);
-    cursor: pointer;
-    text-decoration: underline;
-    background: none;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
+    display:block; text-align:center; margin-top:18px;
+    font-size:0.82rem; color:var(--grey); cursor:pointer;
+    text-decoration:underline; background:none; border:none;
+    font-family:'Figtree',sans-serif;
   }
-  .retake:hover { color: var(--blue); }
+  .retake:hover { color:var(--purple2); }
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .slide-out {
-    animation: slideOut 0.25s ease forwards;
-  }
-  @keyframes slideOut {
-    to { opacity: 0; transform: translateX(-20px); }
-  }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+  .slide-out { animation:slideOut 0.25s ease forwards; }
+  @keyframes slideOut { to{opacity:0;transform:translateX(-20px)} }
 
-  @media (max-width: 480px) {
-    .card { padding: 28px 20px; }
-    .cta-card { padding: 28px 20px; }
+  @media(max-width:480px){
+    .card { padding:24px 18px; }
+    .cta-card { padding:24px 18px; }
+    .bd-fix { padding-left:18px; }
   }
 </style>
 </head>
 <body>
 
-<div class="topbar">FREE QUIZ — FIND OUT WHERE YOUR INCOME IS LEAKING</div>
+<div class="topbar">Free Quiz — Find Out Where Your Income Is Leaking</div>
 
 <div class="wrap">
 
-  <!-- HEADER -->
   <div class="header">
-    <div class="pill">2-minute quiz</div>
-    <h1>What's Your<br><em>Retainer Readiness Score?</em></h1>
-    <p>Answer 6 quick questions. Get a personalised score that shows exactly where you're leaving money on the table — and what to fix first.</p>
+    <div class="hero-badge"><div class="badge-dot"></div> 2-Minute Quiz</div>
+    <h1>What's Your<br><span class="hi">Retainer Readiness Score?</span></h1>
+    <p>Answer 6 quick questions. Get a personalised score, see exactly where you're leaking money, and walk away with a step-by-step action plan you can start today.</p>
   </div>
 
-  <!-- PROGRESS -->
   <div class="progress-wrap" id="progressWrap">
     <div class="progress-meta">
       <span id="progressLabel">Question 1 of 6</span>
-      <span id="progressPct">0% complete</span>
+      <span id="progressPct">0% Complete</span>
     </div>
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill" style="width:0%"></div>
     </div>
   </div>
 
-  <!-- QUIZ CARD -->
   <div class="card" id="quizCard">
     <div class="q-num" id="qNum">Question 01</div>
     <div class="q-text" id="qText"></div>
@@ -464,37 +291,46 @@
     </div>
   </div>
 
-  <!-- RESULT -->
   <div class="result card" id="resultCard">
     <div class="score-ring-wrap">
       <div class="score-ring">
-        <svg width="140" height="140" viewBox="0 0 140 140">
-          <circle class="ring-bg" cx="70" cy="70" r="60"/>
-          <circle class="ring-fill" id="ringFill" cx="70" cy="70" r="60"
-            stroke-dasharray="377"
-            stroke-dashoffset="377"/>
+        <svg width="148" height="148" viewBox="0 0 148 148">
+          <circle class="ring-bg" cx="74" cy="74" r="64"/>
+          <circle class="ring-fill" id="ringFill" cx="74" cy="74" r="64"
+            stroke-dasharray="402" stroke-dashoffset="402"/>
         </svg>
         <div class="score-label">
           <span class="score-num" id="scoreNum">0</span>
           <span class="score-out">/ 100</span>
         </div>
       </div>
+      <div class="score-tier" id="scoreTier"></div>
     </div>
 
     <div class="result-title" id="resultTitle"></div>
     <div class="result-desc" id="resultDesc"></div>
 
+    <div class="action-plan" id="actionPlan">
+      <div class="action-plan-header">
+        <div class="section-label">Your Personalised Action Plan</div>
+        <div class="priority-badge">⚡ Start This Week</div>
+      </div>
+      <div class="action-steps" id="actionSteps"></div>
+    </div>
+
+    <div class="section-label" style="margin-bottom:12px;">Where You Stand — Area by Area</div>
     <div class="breakdown" id="breakdown"></div>
 
-    <div class="cta-card">
-      <h3 id="ctaTitle">Ready to fix this?</h3>
-      <p id="ctaDesc">Join my free live masterclass and I'll show you the exact system — step by step.</p>
+    <div class="cta-card" id="ctaCard">
+      <h3 id="ctaTitle"></h3>
+      <p id="ctaDesc"></p>
       <div class="cta-form">
         <input type="text"  placeholder="First name" id="ctaName" />
         <input type="email" placeholder="Email address" id="ctaEmail" />
-        <button class="cta-btn" onclick="handleCTA()">Save My Spot — Free →</button>
+        <button class="btn-purple" onclick="handleCTA()">Save My Free Spot →</button>
       </div>
-      <p class="cta-note">No spam. Unsubscribe anytime. Free masterclass — August 2025.</p>
+      <div id="ctaExtra"></div>
+      <p class="cta-note">No spam. Free masterclass — April 10, 2026. No replay.</p>
     </div>
 
     <button class="retake" onclick="retake()">← Retake the quiz</button>
@@ -504,223 +340,292 @@
 
 <script>
 const questions = [
-  {
-    text: "How consistent is your income right now?",
-    options: [
-      { text: "All over the place — some months great, some months nothing",       score: 0 },
-      { text: "Somewhat consistent but I can't predict it month to month",          score: 5 },
-      { text: "Fairly stable — I usually know roughly what's coming in",            score: 12 },
-      { text: "Very consistent — I have retainer clients I can count on",           score: 18 },
+  { text:"How consistent is your income right now?", key:"income",
+    options:[
+      {text:"All over the place — some months great, some months nothing",          score:0},
+      {text:"Somewhat consistent but I can't predict it month to month",            score:5},
+      {text:"Fairly stable — I usually know roughly what's coming in",              score:12},
+      {text:"Very consistent — I have retainer clients I can count on",             score:18},
     ]
   },
-  {
-    text: "How do most of your clients currently pay you?",
-    options: [
-      { text: "One-off projects — they pay per video or per shoot",                 score: 0 },
-      { text: "Mostly one-off but I have one or two repeat clients",                score: 5 },
-      { text: "A mix — some retainers, some one-off work",                          score: 12 },
-      { text: "Mainly monthly retainers — clients pay me the same amount each month", score: 18 },
+  { text:"How do most of your clients currently pay you?", key:"retainer",
+    options:[
+      {text:"One-off projects — they pay per video or per shoot",                   score:0},
+      {text:"Mostly one-off but I have one or two repeat clients",                  score:5},
+      {text:"A mix — some retainers, some one-off work",                            score:12},
+      {text:"Mainly monthly retainers — clients pay me the same amount each month", score:18},
     ]
   },
-  {
-    text: "When a potential client asks your price, what usually happens?",
-    options: [
-      { text: "I panic and underprice to avoid losing them",                        score: 0 },
-      { text: "I give them a number but then feel like I charged too little",       score: 5 },
-      { text: "I'm fairly confident but occasionally drop my price when pushed",    score: 10 },
-      { text: "I state my price with confidence and hold it",                       score: 16 },
+  { text:"When a potential client asks your price, what usually happens?", key:"pricing",
+    options:[
+      {text:"I panic and underprice to avoid losing them",                          score:0},
+      {text:"I give them a number but then feel like I charged too little",         score:5},
+      {text:"I'm fairly confident but occasionally drop my price when pushed",      score:10},
+      {text:"I state my price with confidence and hold it",                         score:16},
     ]
   },
-  {
-    text: "How do you currently find new clients?",
-    options: [
-      { text: "Mostly word of mouth — I wait and hope someone refers me",           score: 0 },
-      { text: "I post content sometimes but nothing consistent or predictable",     score: 5 },
-      { text: "I have a system — outreach, content, or both — but it's not dialled in", score: 10 },
-      { text: "I have a repeatable system that generates leads consistently",       score: 16 },
+  { text:"How do you currently find new clients?", key:"leads",
+    options:[
+      {text:"Mostly word of mouth — I wait and hope someone refers me",            score:0},
+      {text:"I post content sometimes but nothing consistent or predictable",      score:5},
+      {text:"I have a system but it's not fully dialled in",                       score:10},
+      {text:"I have a repeatable system that generates leads consistently",        score:16},
     ]
   },
-  {
-    text: "How much of your work do you have documented in a process or system?",
-    options: [
-      { text: "Nothing — it's all in my head and I figure it out each time",        score: 0 },
-      { text: "A few things written down but nothing I could hand to someone else", score: 4 },
-      { text: "Most of my process is documented but not fully streamlined",         score: 10 },
-      { text: "I have clear SOPs and could onboard a client without reinventing it each time", score: 16 },
+  { text:"How much of your work do you have documented in a process or system?", key:"systems",
+    options:[
+      {text:"Nothing — it's all in my head and I figure it out each time",         score:0},
+      {text:"A few things written down but nothing I could hand to someone else",  score:4},
+      {text:"Most of my process is documented but not fully streamlined",          score:10},
+      {text:"I have clear SOPs — I could onboard a client without reinventing it", score:16},
     ]
   },
-  {
-    text: "If you signed a new $5,000/month retainer client tomorrow, could you deliver?",
-    options: [
-      { text: "Honestly no — I don't know what I'd even include for that price",    score: 0 },
-      { text: "Probably, but I'd be figuring it out as I go",                       score: 5 },
-      { text: "Yes, but I'd be stretched and stressed doing it solo",               score: 10 },
-      { text: "Yes — I have a clear offer, clear deliverables, and capacity to deliver it", score: 16 },
+  { text:"If you signed a new $5,000/month retainer client tomorrow, could you deliver?", key:"delivery",
+    options:[
+      {text:"Honestly no — I don't know what I'd even include for that price",     score:0},
+      {text:"Probably, but I'd be figuring it out as I go",                        score:5},
+      {text:"Yes, but I'd be stretched and stressed doing it solo",                score:10},
+      {text:"Yes — clear offer, clear deliverables, and capacity to deliver it",   score:16},
     ]
   },
 ];
+
+const weaknessFixes = {
+  income:{
+    bad: "<strong>Fix it:</strong> Stop taking one-off projects without a path to retainer. Every new client should be pitched a monthly package within their first 30 days. I'll show you the exact script in the masterclass.",
+    warn:"<strong>Fix it:</strong> You have some stability but it's fragile. Add one retainer client at your target price this month — that single move changes how you operate.",
+    good:null
+  },
+  retainer:{
+    bad: "<strong>Fix it:</strong> Build a simple 3-deliverable monthly package — even if it feels basic. Clients can't say yes to something that isn't defined. I cover the exact structure in the masterclass.",
+    warn:"<strong>Fix it:</strong> Convert your best one-off client to a retainer this week. You already have the relationship — pitch them a monthly deal and watch how many say yes.",
+    good:null
+  },
+  pricing:{
+    bad: "<strong>Fix it:</strong> Your pricing fear is costing you thousands every month. Practise your price out loud 20 times before your next call — the number feels scary because it's unfamiliar, not because it's wrong.",
+    warn:"<strong>Fix it:</strong> If you're discounting when pushed, clients are training you. Add a 48-hour hold on your quote — never negotiate on the spot. I'll give you the exact language to hold your rate in the masterclass.",
+    good:null
+  },
+  leads:{
+    bad: "<strong>Fix it:</strong> Word of mouth isn't a strategy — it's luck. Pick one proactive lead source and start tomorrow: 10 DMs a day, one piece of content, or one referral ask to a past client. Just one. Consistently.",
+    warn:"<strong>Fix it:</strong> Block 45 minutes every morning for outreach before anything else. That single habit separates $3k months from $10k months.",
+    good:null
+  },
+  systems:{
+    bad: "<strong>Fix it:</strong> This week, write down the 5 things you do for every client. That's your first SOP. Takes 30 minutes and immediately makes you look more professional — and makes you scalable.",
+    warn:"<strong>Fix it:</strong> The missing piece is usually your onboarding flow. A clean client onboarding doc (welcome email, timeline, deliverable schedule) reduces back-and-forth by 80% and makes clients feel taken care of.",
+    good:null
+  },
+  delivery:{
+    bad: "<strong>Fix it:</strong> Before you pitch another client, define your offer — what you deliver, how often, and what result they can expect. Even a rough version closes more clients than a vague pitch. We'll build this together in the masterclass.",
+    warn:"<strong>Fix it:</strong> You can deliver but you're doing it all alone. Identify one recurring task this month and hand it off or systemise it. Even one delegated task frees up 5+ hours a week.",
+    good:null
+  }
+};
 
 const results = [
   {
-    min: 0, max: 25,
-    title: "You're at the starting line — <em>and that's okay.</em>",
-    desc: "Your income is unpredictable, your pricing is reactive, and you don't yet have a system to attract or retain high-ticket clients consistently. The good news? You're exactly who this masterclass was built for. Every single gap here is fixable with the right framework.",
-    cta: "Here's your next move:",
-    ctaDesc: "Come to the free live masterclass. I'll walk you through the exact 3-step system that takes someone from where you are now to $5k–$10k retainer clients — starting in the next 30 days.",
-    breakdown: [
-      { icon: '⚠️', type: 'bad',  label: 'Income consistency',   sub: 'No predictable monthly base yet' },
-      { icon: '⚠️', type: 'bad',  label: 'Retainer structure',   sub: 'Still relying on one-off work' },
-      { icon: '⚠️', type: 'bad',  label: 'Pricing confidence',   sub: 'Undercharging is costing you money' },
-      { icon: '⚠️', type: 'warn', label: 'Lead generation',      sub: 'No consistent system in place' },
-    ]
+    min:0, max:25,
+    tier:"Starting Out",
+    tierColor:"rgba(255,68,68,0.12)", tierBorder:"rgba(255,68,68,0.35)", tierText:"#FF6B6B",
+    title:"You're at the starting line — <em>and that's okay.</em>",
+    desc:"Your income is unpredictable, pricing is reactive, and there's no system yet to attract or keep high-ticket clients. The good news: every single gap here is fixable — and this masterclass was built specifically for where you are right now.",
+    actionSteps:[
+      {num:"1", title:"Define your retainer offer — today", body:"Pick 3 things you can deliver every month. Give it a name and a price. Even $1,500/month to start. You cannot sell what you haven't defined. Write it down before you do anything else.", tag:"Do this in 30 mins"},
+      {num:"2", title:"Send 5 outreach messages tomorrow morning", body:"Message 5 people you've worked with or spoken to before. Ask if they need ongoing content support. Don't wait until you feel ready. One yes changes your whole month.", tag:"Do this tomorrow"},
+      {num:"3", title:"Register for the free masterclass and show up live", body:"I'll walk you through the full Content To Cash system — client acquisition, pricing, and how to keep clients paying for years. This is the fastest shortcut from where you are now to your first retainer.", tag:"April 10 · 8PM ET"},
+    ],
+    breakdown:[
+      {key:"income",   icon:"⚠️", type:"bad",  label:"Income consistency",  sub:"No predictable monthly base yet"},
+      {key:"retainer", icon:"⚠️", type:"bad",  label:"Retainer structure",  sub:"Still relying on one-off work"},
+      {key:"pricing",  icon:"⚠️", type:"bad",  label:"Pricing confidence",  sub:"Undercharging is costing you money"},
+      {key:"leads",    icon:"⚠️", type:"warn", label:"Lead generation",     sub:"No consistent system in place"},
+    ],
+    ctaBg:"var(--purple-dim)", ctaBorder:"rgba(108,99,255,0.35)",
+    ctaTitle:"The masterclass is your next move.",
+    ctaDesc:"Come live on April 10th. I'll walk you through the exact 3-step system to land your first $3k–$6.5k retainer — nothing held back, no replay.",
+    showWA:false,
   },
   {
-    min: 26, max: 55,
-    title: "You've got momentum — <em>but you're leaving money behind.</em>",
-    desc: "You're making money and you have some of the fundamentals in place. But your income is still inconsistent, you're probably not charging what you're worth, and you're missing a system that would make this predictable. You're closer than you think — a few key moves would change everything.",
-    cta: "What to fix first:",
-    ctaDesc: "Your biggest leak is pricing and retainer structure. In the free masterclass, I'll show you exactly how to repackage what you're already doing into a $3k–$6.5k/month offer clients will say yes to.",
-    breakdown: [
-      { icon: '✓',  type: 'good', label: 'You have clients',        sub: 'Foundation is there' },
-      { icon: '⚠️', type: 'warn', label: 'Income still unpredictable', sub: 'Month-to-month uncertainty' },
-      { icon: '⚠️', type: 'warn', label: 'Pricing not maximised',   sub: 'Room to charge significantly more' },
-      { icon: '⚠️', type: 'bad',  label: 'No retainer system',      sub: 'Still starting from zero each month' },
-    ]
+    min:26, max:55,
+    tier:"Building Momentum",
+    tierColor:"rgba(245,197,66,0.12)", tierBorder:"rgba(245,197,66,0.35)", tierText:"#F5C542",
+    title:"You've got momentum — <em>but you're leaving money behind.</em>",
+    desc:"You're making money and have some of the pieces. But income is still inconsistent, you're probably undercharging, and there's no system making this predictable yet. You're closer than you think — the right moves this week will change your next 90 days.",
+    actionSteps:[
+      {num:"1", title:"Raise your price on your next proposal right now", body:"Whatever you were going to charge — add $500 minimum. Don't negotiate it down. The clients who push back hard on price are rarely your long-term retainer clients anyway.", tag:"On your next call"},
+      {num:"2", title:"Pitch one current client a monthly retainer this week", body:"Go through your active one-off clients and pick the best one. Pitch them a monthly package — you already have the relationship. Even $2k/month locked in changes your entire baseline.", tag:"This week"},
+      {num:"3", title:"Register for the masterclass and come with questions", body:"I'll cover the exact retainer offer structure and the closing script that gets clients to say yes to monthly deals. At your level, this masterclass will be the turning point.", tag:"April 10 · 8PM ET"},
+    ],
+    breakdown:[
+      {key:"income",   icon:"✓",  type:"good", label:"You have clients",             sub:"Foundation is there"},
+      {key:"retainer", icon:"⚠️", type:"warn", label:"Income still unpredictable",   sub:"Month-to-month uncertainty"},
+      {key:"pricing",  icon:"⚠️", type:"warn", label:"Pricing not maximised",        sub:"Room to charge significantly more"},
+      {key:"leads",    icon:"⚠️", type:"bad",  label:"No consistent lead system",    sub:"Still starting from zero each month"},
+    ],
+    ctaBg:"var(--purple-dim)", ctaBorder:"rgba(108,99,255,0.35)",
+    ctaTitle:"Register for the masterclass — it's free.",
+    ctaDesc:"I'll show you how to repackage what you're already doing into a $3k–$6.5k/month retainer offer and how to close it without feeling pushy or salesy.",
+    showWA:true,
   },
   {
-    min: 56, max: 79,
-    title: "You're close — <em>one system away from the next level.</em>",
-    desc: "You're running a real business. You have clients, a process, and some predictability. But you haven't yet cracked the ceiling — you're not fully retainer-based, you're probably still doing too much yourself, and there's a gap between where you are and where you want to be. The system is right there.",
-    cta: "Your next unlock:",
-    ctaDesc: "You're at the stage where the right positioning and offer structure will double your monthly revenue without adding more hours. That's exactly what the masterclass covers.",
-    breakdown: [
-      { icon: '✓',  type: 'good', label: 'Consistent clients',     sub: 'Strong foundation' },
-      { icon: '✓',  type: 'good', label: 'Processes in place',     sub: 'Can deliver at scale' },
-      { icon: '⚠️', type: 'warn', label: 'Not fully retainer-based', sub: 'Still some income risk' },
-      { icon: '⚠️', type: 'warn', label: 'Growth ceiling',         sub: 'Needs a scalable client system' },
-    ]
+    min:56, max:79,
+    tier:"Close to the Top",
+    tierColor:"rgba(108,99,255,0.15)", tierBorder:"rgba(108,99,255,0.4)", tierText:"#8B85FF",
+    title:"You're close — <em>one system away from the next level.</em>",
+    desc:"You're running a real business — clients, process, some predictability. But you're not fully retainer-based yet and there's a ceiling you keep hitting. You don't need to rebuild from scratch. You need one targeted upgrade to your system.",
+    actionSteps:[
+      {num:"1", title:"Audit every active client for retainer potential this week", body:"Go through every client you have. Who's paying you one-off that could be on a monthly deal? Make a list of the top 3 and reach out with a retainer pitch by Friday.", tag:"This week"},
+      {num:"2", title:"Set a new price floor and enforce it starting today", body:"Whatever your lowest current client pays — that's your new minimum. No more work below it. Every new client you take below your floor keeps you stuck at the same ceiling.", tag:"Decide today"},
+      {num:"3", title:"Come to the masterclass and bring your questions", body:"You're at the stage where specific frameworks will double your monthly revenue without adding more hours. That's exactly what I cover — and I want you in the room.", tag:"April 10 · 8PM ET"},
+    ],
+    breakdown:[
+      {key:"income",   icon:"✓",  type:"good", label:"Consistent clients",       sub:"Strong foundation"},
+      {key:"systems",  icon:"✓",  type:"good", label:"Processes in place",       sub:"Can deliver at scale"},
+      {key:"retainer", icon:"⚠️", type:"warn", label:"Not fully retainer-based", sub:"Still some income risk"},
+      {key:"pricing",  icon:"⚠️", type:"warn", label:"Growth ceiling",           sub:"Needs a scalable acquisition system"},
+    ],
+    ctaBg:"var(--purple-dim)", ctaBorder:"rgba(108,99,255,0.35)",
+    ctaTitle:"You're ready for the next tier.",
+    ctaDesc:"Register for the free masterclass on April 10th. I'll show you how to build the scalable acquisition system that gets you from where you are to $10k–$20k/month consistently.",
+    showWA:true,
   },
   {
-    min: 80, max: 100,
-    title: "You're already operating at a high level — <em>let's scale it.</em>",
-    desc: "You have the foundations most videographers never build — retainer clients, a process, pricing confidence, and a system to find leads. Now it's about scaling what's already working. The masterclass will show you how to use ads and webinars to bring in high-quality retainer clients on autopilot.",
-    cta: "What's next for you:",
-    ctaDesc: "You're ready to layer in a growth system. Come to the free masterclass and I'll show you how to turn what you've built into a $20k–$50k/month agency — the way I did it.",
-    breakdown: [
-      { icon: '✓', type: 'good', label: 'Retainer clients',       sub: 'Predictable monthly income' },
-      { icon: '✓', type: 'good', label: 'Strong pricing',         sub: 'Charging what you are worth' },
-      { icon: '✓', type: 'good', label: 'Lead generation system', sub: 'Consistent pipeline' },
-      { icon: '✓', type: 'good', label: 'Systems in place',       sub: 'Ready to scale' },
-    ]
+    min:80, max:100,
+    tier:"High Performer",
+    tierColor:"rgba(72,199,142,0.12)", tierBorder:"rgba(72,199,142,0.35)", tierText:"#48C78E",
+    title:"You're operating at a high level — <em>let's scale it.</em>",
+    desc:"You've built what most videographers never build — retainer clients, a real process, pricing confidence, and a lead system. Now it's about leverage. You don't need more hustle. You need the right system to multiply what's already working.",
+    actionSteps:[
+      {num:"1", title:"Identify your highest-leverage service and only pitch that", body:"Which retainer client gets the best results for the least effort on your end? That's your signature offer. Package it, name it, and stop offering everything to everyone.", tag:"This week"},
+      {num:"2", title:"Delegate or systemise one task this month", body:"You've hit the ceiling of what one person can deliver. Even one VA or editor frees 10+ hours a week — and that's the time you need to get from $10k to $20k/month.", tag:"This month"},
+      {num:"3", title:"Show up to the masterclass — I work closely with people at your level", body:"You're the person I built this for. Come live, bring your toughest questions, and stay to the end. I'll show you how I scaled to $50k/month and how you can use what you've already built to do the same.", tag:"April 10 · 8PM ET"},
+    ],
+    breakdown:[
+      {key:"income",   icon:"✓", type:"good", label:"Predictable retainer income",  sub:"Solid monthly baseline"},
+      {key:"pricing",  icon:"✓", type:"good", label:"Strong pricing confidence",    sub:"Charging what you are worth"},
+      {key:"leads",    icon:"✓", type:"good", label:"Lead generation system",       sub:"Consistent pipeline in place"},
+      {key:"systems",  icon:"✓", type:"good", label:"Systems & SOPs in place",      sub:"Ready to scale and delegate"},
+    ],
+    ctaBg:"rgba(72,199,142,0.08)", ctaBorder:"rgba(72,199,142,0.3)",
+    ctaTitle:"You're ready to scale. Let's go.",
+    ctaDesc:"Register for the free masterclass. I'll show you the exact system I used to go from $10k to $50k/month — and how to implement it fast at your level.",
+    showWA:true,
   },
 ];
 
-let current = 0;
-let totalScore = 0;
-let selected = null;
+let current=0, totalScore=0, selected=null, answerKeys=[];
 
-function render() {
-  const q = questions[current];
-  const letters = ['A','B','C','D'];
-
-  document.getElementById('qNum').textContent = 'Question ' + String(current + 1).padStart(2,'0');
-  document.getElementById('qText').textContent = q.text;
-
-  const opts = document.getElementById('options');
-  opts.innerHTML = '';
-  q.options.forEach(function(o, i) {
-    const div = document.createElement('div');
-    div.className = 'option';
-    div.innerHTML = '<div class="option-letter">' + letters[i] + '</div><div class="option-text">' + o.text + '</div>';
-    div.addEventListener('click', function() {
-      document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+function render(){
+  const q=questions[current], letters=['A','B','C','D'];
+  document.getElementById('qNum').textContent='Question '+String(current+1).padStart(2,'0');
+  document.getElementById('qText').textContent=q.text;
+  const opts=document.getElementById('options');
+  opts.innerHTML='';
+  q.options.forEach(function(o,i){
+    const div=document.createElement('div');
+    div.className='option';
+    div.innerHTML='<div class="option-letter">'+letters[i]+'</div><div class="option-text">'+o.text+'</div>';
+    div.addEventListener('click',function(){
+      document.querySelectorAll('.option').forEach(el=>el.classList.remove('selected'));
       div.classList.add('selected');
-      selected = o.score;
+      selected={score:o.score,index:i};
       document.getElementById('btnNext').classList.add('active');
     });
     opts.appendChild(div);
   });
-
-  const pct = Math.round((current / questions.length) * 100);
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressLabel').textContent = 'Question ' + (current + 1) + ' of ' + questions.length;
-  document.getElementById('progressPct').textContent = pct + '% complete';
-
-  selected = null;
+  const pct=Math.round((current/questions.length)*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressLabel').textContent='Question '+(current+1)+' of '+questions.length;
+  document.getElementById('progressPct').textContent=pct+'% Complete';
+  selected=null;
   document.getElementById('btnNext').classList.remove('active');
 }
 
-document.getElementById('btnNext').addEventListener('click', function() {
-  if (selected === null) return;
-  totalScore += selected;
+document.getElementById('btnNext').addEventListener('click',function(){
+  if(!selected)return;
+  totalScore+=selected.score;
+  answerKeys.push({key:questions[current].key,score:selected.score,maxScore:questions[current].options[3].score});
   current++;
-  if (current < questions.length) {
-    const card = document.getElementById('quizCard');
+  if(current<questions.length){
+    const card=document.getElementById('quizCard');
     card.classList.add('slide-out');
-    setTimeout(function() {
-      card.classList.remove('slide-out');
-      render();
-    }, 250);
-  } else {
-    showResult();
-  }
+    setTimeout(function(){card.classList.remove('slide-out');render();},250);
+  } else { showResult(); }
 });
 
-function showResult() {
-  document.getElementById('progressFill').style.width = '100%';
-  document.getElementById('progressLabel').textContent = 'Complete';
-  document.getElementById('progressPct').textContent = '100% complete';
+function showResult(){
+  document.getElementById('progressFill').style.width='100%';
+  document.getElementById('progressLabel').textContent='Complete';
+  document.getElementById('progressPct').textContent='100% Complete';
+  document.getElementById('quizCard').style.display='none';
 
-  document.getElementById('quizCard').style.display = 'none';
+  const score=Math.min(totalScore,100);
+  const result=results.find(r=>score>=r.min&&score<=r.max)||results[0];
 
-  const score = Math.min(totalScore, 100);
-  const result = results.find(r => score >= r.min && score <= r.max) || results[0];
+  document.getElementById('scoreNum').textContent=score;
+  const tierEl=document.getElementById('scoreTier');
+  tierEl.textContent=result.tier;
+  tierEl.style.background=result.tierColor;
+  tierEl.style.borderColor=result.tierBorder;
+  tierEl.style.color=result.tierText;
+  document.getElementById('resultTitle').innerHTML=result.title;
+  document.getElementById('resultDesc').textContent=result.desc;
 
-  document.getElementById('scoreNum').textContent = score;
-  document.getElementById('resultTitle').innerHTML = result.title;
-  document.getElementById('resultDesc').textContent = result.desc;
-  document.getElementById('ctaTitle').textContent = result.cta;
-  document.getElementById('ctaDesc').textContent = result.ctaDesc;
-
-  const bd = document.getElementById('breakdown');
-  bd.innerHTML = '';
-  result.breakdown.forEach(function(item) {
-    bd.innerHTML += '<div class="breakdown-item"><div class="bd-icon ' + item.type + '">' + item.icon + '</div><div><div class="bd-label">' + item.label + '</div><div class="bd-sub">' + item.sub + '</div></div></div>';
+  // Action steps
+  const stepsEl=document.getElementById('actionSteps');
+  stepsEl.innerHTML='';
+  result.actionSteps.forEach(function(s){
+    stepsEl.innerHTML+='<div class="action-step"><div class="action-step-num">'+s.num+'</div><div class="action-step-body"><h4>'+s.title+'</h4><p>'+s.body+'</p><span class="step-tag">'+s.tag+'</span></div></div>';
   });
 
-  const rc = document.getElementById('resultCard');
-  rc.classList.add('show');
+  // Breakdown with fixes
+  const bd=document.getElementById('breakdown');
+  bd.innerHTML='';
+  result.breakdown.forEach(function(item){
+    const ans=answerKeys.find(a=>a.key===item.key);
+    let fixType=item.type;
+    if(ans){ const r=ans.score/ans.maxScore; fixType=r===0?'bad':r<0.7?'warn':'good'; }
+    const fixes=weaknessFixes[item.key];
+    const fixText=fixes?fixes[fixType]:null;
+    bd.innerHTML+='<div class="breakdown-item"><div class="bd-main"><div class="bd-icon '+item.type+'">'+item.icon+'</div><div><div class="bd-label">'+item.label+'</div><div class="bd-sub">'+item.sub+'</div></div></div>'+(fixText?'<div class="bd-fix">'+fixText+'</div>':'')+'</div>';
+  });
 
-  // Animate ring
-  const circumference = 377;
-  const offset = circumference - (score / 100) * circumference;
-  setTimeout(function() {
-    document.getElementById('ringFill').style.strokeDashoffset = offset;
-    // Count up number
-    let n = 0;
-    const step = score / 60;
-    const interval = setInterval(function() {
-      n = Math.min(n + step, score);
-      document.getElementById('scoreNum').textContent = Math.round(n);
-      if (n >= score) clearInterval(interval);
-    }, 16);
-  }, 200);
+  // CTA
+  const ctaCard=document.getElementById('ctaCard');
+  ctaCard.style.background=result.ctaBg;
+  ctaCard.style.border='1px solid '+result.ctaBorder;
+  document.getElementById('ctaTitle').textContent=result.ctaTitle;
+  document.getElementById('ctaDesc').textContent=result.ctaDesc;
+
+  const ctaExtra=document.getElementById('ctaExtra');
+  ctaExtra.innerHTML=result.showWA?'<div class="cta-divider"><span>also</span></div><a href="#" class="btn-wa"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Join the WhatsApp Group →</a>':'';
+
+  document.getElementById('resultCard').classList.add('show');
+
+  const circumference=402, offset=circumference-(score/100)*circumference;
+  setTimeout(function(){
+    document.getElementById('ringFill').style.strokeDashoffset=offset;
+    let n=0; const step=score/60;
+    const interval=setInterval(function(){
+      n=Math.min(n+step,score);
+      document.getElementById('scoreNum').textContent=Math.round(n);
+      if(n>=score)clearInterval(interval);
+    },16);
+  },200);
 }
 
-function handleCTA() {
-  const name = document.getElementById('ctaName').value.trim();
-  const email = document.getElementById('ctaEmail').value.trim();
-  if (!name || !email) { alert('Please enter your name and email to save your spot.'); return; }
-  // Replace with actual registration URL
-  alert('You\'re in, ' + name + '! Check your email for the webinar link.');
+function handleCTA(){
+  const name=document.getElementById('ctaName').value.trim();
+  const email=document.getElementById('ctaEmail').value.trim();
+  if(!name||!email){alert('Please enter your name and email to save your spot.');return;}
+  alert('You\'re in, '+name+'! Check your email for the masterclass link.');
 }
 
-function retake() {
-  current = 0;
-  totalScore = 0;
-  selected = null;
+function retake(){
+  current=0;totalScore=0;selected=null;answerKeys=[];
   document.getElementById('resultCard').classList.remove('show');
-  document.getElementById('quizCard').style.display = 'block';
+  document.getElementById('quizCard').style.display='block';
   render();
 }
 
